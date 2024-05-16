@@ -92,5 +92,6 @@ def getChatChain(llm, db):
         inputs = {"question": question}
         result = final_chain.invoke(inputs)
         memory.save_context(inputs, {"answer": result["answer"]})
-
+        return result["answer"]
+    
     return chat

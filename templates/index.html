@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chatbot - Food Security 2023</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <h1>CMPE 172 Hackathon - Chatbot - Food Security 2023</h1>
+    <div id="chat-container">
+      <input type="text" id="user-input" placeholder="Type your message...">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        function appendMessage(message) {
+            $('#chat-container').append(`<p>${message}</p>`);
+        }
+
+        function sendMessage() {
+            const userInput = $('#user-input').val();
+            if (!userInput.trim()) return;
+
+            appendMessage(`User: ${userInput}`);
+            $('#user-input').val('');
+
+            $.ajax({
+                url: '/chat',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ input: userInput }),
+                success: function(data) {
+                    appendMessage(`Bot: ${data.response}`);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
